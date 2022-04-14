@@ -7,12 +7,14 @@
 
 {% for a in art %}
   <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ a.title }}</span>
-      <p>Artist: {{ a.artist }}</p>
-      <p>Style: {{ a.style }}</p>
-      <p>Year: {{ a.year }}</p>
-    </div>
+    <a href="{% url 'detail' a.id %}">
+      <div class="card-content">
+        <span class="card-title">{{ a.title }}</span>
+        <p>Artist: {{ a.artist }}</p>
+        <p>Style: {{ a.style }}</p>
+        <p>Year: {{ a.year }}</p>
+      </div>
+    </a>
   </div>
 {% endfor %}
 
