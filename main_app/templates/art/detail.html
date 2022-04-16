@@ -19,7 +19,6 @@
     </div>
   </div>
   <div class="col s6">
-
     <div class="card">
       <div class="card-content">
         <span class="card-title">Comments Section </span>
@@ -36,6 +35,52 @@
     </form>
   </div>
 </div>
+<!-- Display associated galleries -->
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>Galleries That Display {{ art.title }}</h3>
+    {% if art.galleries.count %}
+      {% for gallery in art.galleries.all %}
+        <div class="card">
+          <div class="card-content">
+              <p>{{ gallery.name }}</p>
+              <p>{{ gallery.location }}</p>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'unassoc_gallery' art.id gallery.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Remove</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>No Galleries Yet</h5>
+    {% endif %}
+  </div>
+<!-- Available galleries -->
+  <div class="col s6">
+    <h3>Available Galleries</h3> 
+    {% if galleries.count %}
+      {% for gallery in galleries.all %}
+        <div class="card">
+          <div class="card-content">
+              <p>{{ gallery.name }}</p>
+              <p>{{ gallery.location }}</p>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'assoc_gallery' art.id gallery.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{art.title}} is already being shown at all galleries.</h5>
+    {% endif %}
+  </div>
 
 
 {% endblock %}

@@ -17,6 +17,7 @@ class Art(models.Model):
     artist = models.CharField(max_length=100)
     style = models.CharField(max_length=100)
     year = models.IntegerField()
+    galleries = models.ManyToManyField(Gallery)
 
     def __str__(self):
         return self.title
