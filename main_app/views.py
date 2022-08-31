@@ -20,10 +20,12 @@ def art_index(request):
 def art_detail(request, a_id):
   art = Art.objects.get(id=a_id)
   id_list = art.galleries.all().values_list('id')
-  galleries_art_doesnt_have = Art.objects.exclude(id__in=id_list)
+  galleries_art_doesnt_have = Gallery.objects.exclude(id__in=id_list)
   comment_form = CommentForm()
   return render(request, 'art/detail.html', { 
-    'art': art, 'comment_form': comment_form, 'galleries': galleries_art_doesnt_have 
+    'art': art, 
+    'comment_form': comment_form, 
+    'galleries': galleries_art_doesnt_have 
     })
 
 def assoc_gallery(request, a_id, gallery_id):
@@ -53,10 +55,6 @@ def add_comment(request, a_id):
     new_comment.art_id = a_id
     new_comment.save()
   return redirect('detail', a_id=a_id)  
-
-def assoc_gallery(request, a_id, gallery_id):
-  Art.objects.get(id=a_id).galleries.add(gallery_id)
-  return redirect ('detail', a_id=gallery_id)
 
 class GalleryList(ListView):
   model = Gallery
